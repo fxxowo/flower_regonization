@@ -17,7 +17,12 @@ from myflower_model import Model
 if __name__ == "__main__":
     since = time.time()
     # 保存最好的准确率
-    device = "cpu"
+    if torch.cuda.is_available():
+        # 如果有，返回 CUDA 设备
+        device = torch.device('cuda')
+    else:
+        # 否则返回 CPU 设备
+        device = torch.device('cpu')
     model = Model().to(device)
 
     num_epochs = 25
@@ -36,10 +41,10 @@ if __name__ == "__main__":
             inputs = inputs.to(device)
             labels = labels.to(device)
 
-            outputs = model(inputs)
+            outputs = model(inputs).to(device)
             # print(outputs.shape)
             index = torch.argmax(outputs, 1)
-            res = torch.zeros(8, 102)
+            res = torch.zeros(8, 102).to(device)
             for i in range(len(labels)):
                 res[i][labels[i]] = 1
             loss = criterion(outputs, res)
