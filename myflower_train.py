@@ -9,8 +9,8 @@ import torch
 from torch import optim, nn
 from tqdm import tqdm
 
-from flower_testing.flower_dataset import dataloaders
-from flower_testing.myflower_model import Model
+from flower_dataset import dataloaders
+from myflower_model import Model
 
 # 得到并保存神经网络模型checkpoint.pth
 # （模型，数据，损失函数，优化器
